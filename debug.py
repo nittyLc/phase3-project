@@ -1,4 +1,4 @@
-from models import session
+from lib.models import session
 from models.book import Book
 from models import Base, engine
 

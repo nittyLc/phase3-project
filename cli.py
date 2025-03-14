@@ -1,7 +1,7 @@
-from models import session
-from models.book import Book
-from models.member import Member
-from models.borrow import Borrow
+from lib.models import session
+from lib.models.book import Book
+from lib.models.member import Member
+from lib.models.borrow import Borrow
 
 def main_menu():
     while True:

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from lib.models import Base
 
 class Book(Base):
@@ -7,7 +8,10 @@ class Book(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String, nullable=False)
     author = Column(String, nullable=False)
-    isbn = Column(String, unique=True, nullable=False)
+    copies_available = Column(Integer, default=1)
+
+    # Relationship to Borrow
+    borrows = relationship("lib.models.borrow.Borrow", back_populates="book")
 
     def __repr__(self):
-        return f"<Book(id={self.id}, title='{self.title}', author='{self.author}', isbn='{self.isbn}')>"
+        return f"<Book(title='{self.title}', author='{self.author}', copies_available={self.copies_available})>"
