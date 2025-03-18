@@ -1,8 +1,8 @@
-"""Create initial tables
+"""Initial migration
 
-Revision ID: 59bc59a3f83c
-Revises: bfa1dfe15ead
-Create Date: 2025-03-14 23:21:24.108090
+Revision ID: 4acab3b0fe6f
+Revises: 
+Create Date: 2025-03-18 12:19:09.245329
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '59bc59a3f83c'
-down_revision: Union[str, None] = 'bfa1dfe15ead'
+revision: str = '4acab3b0fe6f'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -25,22 +25,20 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('author', sa.String(), nullable=False),
-    sa.Column('isbn', sa.String(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('isbn')
+    sa.Column('copies_available', sa.Integer(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('members',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
-    sa.Column('email', sa.String(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
+    sa.Column('email', sa.String(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('borrows',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('book_id', sa.Integer(), nullable=False),
     sa.Column('member_id', sa.Integer(), nullable=False),
-    sa.Column('borrow_date', sa.DateTime(), nullable=False),
+    sa.Column('book_id', sa.Integer(), nullable=False),
+    sa.Column('borrow_date', sa.DateTime(), nullable=True),
     sa.Column('return_date', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['book_id'], ['books.id'], ),
     sa.ForeignKeyConstraint(['member_id'], ['members.id'], ),
